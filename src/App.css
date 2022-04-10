@@ -101,7 +101,7 @@ ul {
     color: #666;
 }
 
-.dropdown-wrapper .dropdown li.active {
+.dropdown-wrapper .dropdown li.active a {
     color: #5380F7;
 }
 

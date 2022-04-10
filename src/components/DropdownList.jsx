@@ -1,22 +1,31 @@
 import {useState} from "react";
-import menu from '../data/Menu'
-import shortid from 'shortid';
+import PropTypes from "prop-types";
 
-export default function DropdownList(props) {
-  const [active, setActive] = useState(false)
-  let activeElement = '';
+export default function DropdownList({items}) {
+  const [active, setActive] = useState(-1)
 
-  const menuItems = menu.map(item => ({id: shortid.generate(), value: item}))
 
-  const setActiveState = (e) => {
-    activeElement = e.target.closest('li').dataset.id
-    console.log(activeElement)
+  const setActiveState = (i) => {
+    setActive(i)
   }
+
+  const list = items.map(item =>
+    <li
+      key={item.id}
+      className={item.id === active ? 'active' : ''}
+      onClick={() => setActiveState(item.id)}
+    >
+      <a href={item.value.link}>{item.value.text}</a>
+    </li>)
 
   return (
     <ul data-id="dropdown" className="dropdown">
-      {menuItems.map(item => <li data-id={item.id} key={item.id} className={activeElement === item.id ? 'active' : ''} onClick={setActiveState}><a href={item.value.link}>{item.value.text}</a></li>)}
+      {list}
     </ul>
 
   )
+}
+
+DropdownList.propTypes = {
+  items: PropTypes.array.isRequired
 }
